@@ -9,6 +9,8 @@ import ThreeGlobe from 'three-globe';
 
 import topology from '../img/earth-topology.png';
 import imgmap from '../img/8k_earth_daymap.jpg';
+import darkimgmap from '../img/8k_earth_nightmap.jpg';
+import clouds from '../img/8k_earth_clouds.jpg';
 import nebula from '../img/nebula.jpg';
 import stars from '../img/stars1.jpg';
 
@@ -47,6 +49,9 @@ const myGlobe = new ThreeGlobe()
     //   })();
 
 scene.add(myGlobe);
+
+// myGlobe.rotateY(-Math.PI * (5/9));
+// myGlobe.rotateX(Math.PI / 6);
 // scene.add(new THREE.AmbientLight(0xcccccc, Math.PI))
 // scene.add(new THREE.DirectionalLight(0xffffff, 0.6 * Math.PI));
 const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5 * Math.PI);
@@ -54,6 +59,7 @@ scene.add(directionalLight);
 directionalLight.position.set(0, 0, 325);
 directionalLight.castShadow = true;
 directionalLight.shadow.camera.bottom = -12;
+
 
 const camera = new THREE.PerspectiveCamera(
     45,
@@ -113,7 +119,8 @@ scene.add(ambientLight);
 
 // const dLightShadowHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
 // scene.add(dLightShadowHelper);
-
+// myGlobe.rotateY(-Math.PI * (5/9));
+// myGlobe.rotateX(Math.PI / 6);
 const spotLight = new THREE.SpotLight(0xFFFFFF);
 scene.add(spotLight);
 spotLight.position.set(-100, 100, 0);
@@ -231,26 +238,33 @@ const gui = new dat.GUI();
 
 const options = {
     sphereColor: '#ffea00',
-    wireframe: false,
-    speed: 0.01,
-    angle: 0.2,
-    penumbra: 0,
-    intensity: 1
+    // wireframe: false,
+    // speed: 0.01,
+    // angle: 0.2,
+    // penumbra: 0,
+    // intensity: 1
+    darkmode: false
 };
 
 // gui.addColor(options, 'sphereColor').onChange(function(e){
 //     sphere.material.color.set(e);
 // });
 
-gui.add(options, 'wireframe').onChange(function(e){
+gui.add(options, 'darkmode').onChange(function(e){
     // sphere.material.wireframe = e;
+    if (options.darkmode) {
+        myGlobe.globeImageUrl(darkimgmap)
+    } else {
+        myGlobe.globeImageUrl(imgmap)
+    }
+    
 });
 
-gui.add(options, 'speed', 0, 0.1);
+// gui.add(options, 'speed', 0, 0.1);
 
-gui.add(options, 'angle', 0, 1);
-gui.add(options, 'penumbra', 0, 1);
-gui.add(options, 'intensity', 0, 1);
+// gui.add(options, 'angle', 0, 1);
+// gui.add(options, 'penumbra', 0, 1);
+// gui.add(options, 'intensity', 0, 1);
 
 let step = 0;
 
@@ -304,6 +318,11 @@ function animate(time) {
     // plane2.geometry.attributes.position.array[2] = 10 * Math.random();
     // plane2.geometry.attributes.position.array[lastPointZ] = 10 * Math.random();
     // plane2.geometry.attributes.position.needsUpdate = true;
+
+
+//     myGlobe.rotateY(-Math.PI * (5/9));
+// myGlobe.rotateX(Math.PI / 6);
+
 
     renderer.render(scene, camera);
     //console.log(window.innerHeight);
