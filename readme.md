@@ -1,4 +1,4 @@
-"Three.js Tutorial For Absolute Beginners" YouTube tutorial project files https://youtu.be/xJAfLdUgdc4
+
 
 Download repository
 
